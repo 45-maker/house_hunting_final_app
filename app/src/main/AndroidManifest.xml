@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/cat_1"
+        android:label="@string/app_name"
+
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyProject">
+
+        <!-- Splash Screen (Launcher) -->
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.LoginActivity"
+
+            android:exported="false" />
+
+
+
+        <activity
+            android:name=".Activity.MainActivity"
+            android:exported="false" /> <!-- Profile -->
+        <activity
+            android:name=".Activity.ProfileActivity"
+            android:exported="false" /> <!-- Detail -->
+        <activity
+            android:name=".Activity.DetailActivity"
+            android:exported="false" />
+        <activity android:name=".Activity.SettingsActivity"/>
+
+        <activity android:name=".Activity.AppointmentActivity"/>
+        <activity android:name=".Activity.AccountInfoActivity"/>
+        <activity android:name=".Activity.SecurityActivity"/>
+        <activity android:name=".Activity.Notifications"/>
+        <activity android:name=".Activity.LanguageActivity"/>
+
+
+    </application>
+
+</manifest>

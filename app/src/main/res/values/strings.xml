@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">my project</string>
+    <string name="perfect_home_nfor_your_future" />
+    <string name="perfect_house_nfor_your_future">Perfect house \nfor your future</string>
+    <string name="this_app_will_help_you_to_find_a_better_house_nfor_your_family_and_more">This app will help you to find a better house \nfor your family and more,</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="admin_panel_approvals" />
+    <string name="admin_approval_portal" />
+    <string name="approve_application" />
+</resources>

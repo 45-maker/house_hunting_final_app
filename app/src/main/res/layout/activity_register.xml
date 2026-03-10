@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/house_2"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"/>
+
+        <EditText
+            android:id="@+id/firstName"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="First Name"
+            android:background="@android:drawable/edit_text"
+            android:textColorHint="@color/black"
+            android:textStyle="bold"
+            android:padding="12dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/lastName"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Last Name"
+            android:textColorHint="@color/black"
+            android:textStyle="bold"
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/black"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Phone Number"
+            android:textColorHint="@color/black"
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="15dp"
+            android:inputType="phone"/>
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Email Address"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginBottom="15dp"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Password"
+            android:textColorHint="@color/black"
+            android:textStyle="bold"
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginBottom="25dp"
+            android:textColor="@color/black"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/registerBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Register"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#FF9800"/>
+
+    </LinearLayout>
+
+</ScrollView>

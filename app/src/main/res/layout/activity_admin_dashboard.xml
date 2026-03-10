@@ -1,0 +1,42 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center">
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/admin_panel_approvals"
+        android:textSize="20sp"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/admin_approval_portal"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#263238"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+     <ListView
+         android:id="@+id/applicantList"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:divider="#CFD8DC"
+         android:dividerHeight="1dp"
+         android:layout_marginBottom="10dp"/>
+
+
+
+     <Button android:id="@+id/btnApprove"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="@string/approve_application"
+         android:backgroundTint="#2196F3"/>
+
+ </LinearLayout>
