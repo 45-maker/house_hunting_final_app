@@ -6,10 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myproject.Activity.AccountInfoActivity;
+import com.example.myproject.Database.DatabaseHelper;
+import com.example.myproject.Domain.PropertyDomain;
 import com.example.myproject.R;
 import com.example.myproject.model.Property;
 
@@ -17,13 +21,16 @@ import java.util.List;
 
 public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder> {
 
-    private List<Property> properties;
+    private List<PropertyDomain> properties;
     private Context context;
 
-    public PropertyAdapter(List<Property> properties, Context context) {
+    public PropertyAdapter(List<PropertyDomain> properties, Context context) {
         this.properties = properties;
         this.context = context;
     }
+
+
+
 
     @NonNull
     @Override
@@ -34,16 +41,32 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
 
     @Override
     public void onBindViewHolder(@NonNull PropertyViewHolder holder, int position) {
-        Property property = properties.get(position);
+        PropertyDomain property = properties.get(position);
 
         holder.title.setText(property.getTitle());
         holder.address.setText(property.getLocation());
-        holder.price.setText(property.getPrice());
-        holder.bed.setText(String.valueOf(property.getBeds()));
-        holder.bath.setText(String.valueOf(property.getBaths()));
+
+        // Price: convert to string safely
+        holder.price.setText(String.valueOf(property.getPrice()));
+
+        // Beds, Baths, Garage: convert int to string
+        holder.bed.setText(String.valueOf(property.getBed()));
+        holder.bath.setText(String.valueOf(property.getBath()));
         holder.garage.setText(String.valueOf(property.getGarage()));
-        holder.size.setText(property.getSize());
-        holder.pic.setImageResource(property.getImage()); // drawable resource
+
+        // Size: convert to string if not already
+        holder.size.setText(String.valueOf(property.getSize()));
+
+        // Image
+        holder.pic.setImageResource(property.getImage());
+
+        // Favorite button
+        holder.favBtn.setOnClickListener(v -> {
+            DatabaseHelper db = new DatabaseHelper(context);
+            db.addToFavourite(property.getId());
+            holder.favBtn.setImageResource(R.drawable.ic_favorite);
+            Toast.makeText(context,"Added to favourites",Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
@@ -52,12 +75,13 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.Proper
     }
 
     public static class PropertyViewHolder extends RecyclerView.ViewHolder {
-        ImageView pic;
+        ImageView pic,favBtn;
         TextView price, title, address, bed, bath, garage, size;
 
         public PropertyViewHolder(@NonNull View itemView) {
             super(itemView);
             pic = itemView.findViewById(R.id.pic);
+            favBtn = itemView.findViewById(R.id.favBtn);
             price = itemView.findViewById(R.id.priceTxt);
             title = itemView.findViewById(R.id.titleTxt);
             address = itemView.findViewById(R.id.addressTxt);

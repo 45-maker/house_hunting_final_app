@@ -53,12 +53,10 @@ public class AccountInfoActivity extends AppCompatActivity {
         }
 
         // Load booked properties
-        bookedProperties = db.getBookedPropertiesByUser(userId);
+
 
         // Setup RecyclerView
-        propertyAdapter = new PropertyAdapter(bookedProperties, this);
-        rvBookedProperties.setLayoutManager(new LinearLayoutManager(this));
-        rvBookedProperties.setAdapter(propertyAdapter);
+
     }
 
 }

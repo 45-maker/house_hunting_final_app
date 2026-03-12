@@ -6,12 +6,30 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/propertyImage"
+    <!-- Image + Favourite Button -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/house1"/>
+        android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/propertyImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/house1"/>
+
+        <!-- Favourite Button -->
+        <ImageView
+            android:id="@+id/favBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="6dp"
+            android:background="@drawable/white_bg"
+            android:padding="5dp"
+            android:src="@drawable/ic_favorite_border"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/propertyTitle"

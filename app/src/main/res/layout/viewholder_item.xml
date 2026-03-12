@@ -19,6 +19,20 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+    <ImageView
+        android:id="@+id/favBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+
+        android:background="@drawable/white_bg"
+        android:contentDescription="@string/add_to_favourites"
+        android:src="@drawable/ic_favorite_border"
+        app:layout_constraintTop_toTopOf="@id/pic"
+        app:layout_constraintEnd_toEndOf="@id/pic"
+        android:clickable="true"
+        android:focusable="false"/>
+
     <TextView
         android:id="@+id/priceTxt"
         android:layout_width="wrap_content"

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myproject.Activity.DetailActivity;
+import com.example.myproject.Database.DatabaseHelper;
 import com.example.myproject.Domain.PropertyDomain;
 import com.example.myproject.R;
 import com.example.myproject.databinding.ViewholderItemBinding;
@@ -49,6 +51,8 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
         holder.binding.bedTxt.setText(currentItem.getBed() + " Bed");
         holder.binding.bathTxt.setText(String.valueOf(currentItem.getBath()) + " Bath");
 
+
+
         // --- Safe Image Loading ---
         // Inside onBindViewHolder in ListItemsAdapter.java
         int imageResourceId = currentItem.getImage(); // This should be an int from your Domain class
@@ -60,6 +64,18 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
         } else {
             holder.binding.pic.setImageResource(R.drawable.ic_home);
         }
+        // ❤️ Favourite Button
+        holder.binding.favBtn.setOnClickListener(v -> {
+
+            DatabaseHelper db = new DatabaseHelper(context);
+
+            db.addToFavourite(currentItem.getId());
+
+            holder.binding.favBtn.setImageResource(R.drawable.ic_favorite);
+
+            Toast.makeText(context, "Added to favourites", Toast.LENGTH_SHORT).show();
+        });
+
 
         // Click listener
         holder.itemView.setOnClickListener(v -> {
@@ -67,6 +83,7 @@ public class ListItemsAdapter extends RecyclerView.Adapter<ListItemsAdapter.View
             intent.putExtra("object", currentItem);
             context.startActivity(intent);
         });
+
     }
     @Override
     public int getItemCount() {

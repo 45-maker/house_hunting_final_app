@@ -43,6 +43,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_REASON="reason";
     private static final String COLUMN_STATUS="status";
     private static final String TABLE_APPLICATION ="application" ;
+    private static final String TABLE_FAVOURITES = "favourites";
+    private static final String COL_ID ="id" ;
+    private static final String COL_PROPERTY_ID = "propertyId";
 
 
     public DatabaseHelper(Context context) {
@@ -59,28 +62,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DESCRIPTION + " TEXT,"
                 + COLUMN_IMAGE + " INTEGER,"
                 + COLUMN_TYPE + " TEXT,"
-
-
                 + COLUMN_IS_FAVORITE + " INTEGER DEFAULT 0)";
-        String CREATE_TABLE_APPLICATION = "CREATE TABLE " + TABLE_APPLICATION + "("
-                + COLUMN_ID + "INTEGER PRIMARY KEY AUTOINCREMENT,"
-               + COLUMN_NAME +" TEXT,"
-                +COLUMN_REASON + " TEXT,"
-                + COLUMN_STATUS + " TEXT DEFAULT 'Pending'";
-
 
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS + "("
-
                 + COL_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "name TEXT,"  // Add this
+                + "name TEXT,"
+                + "phone TEXT,"
                 + COL_EMAIL + " TEXT,"
-                + "phone TEXT," // Add this
                 + COL_PASSWORD + " TEXT)";
 
+        String CREATE_TABLE_APPLICATION = "CREATE TABLE " + TABLE_APPLICATION + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_NAME + " TEXT,"
+                + COLUMN_REASON + " TEXT,"
+                + COLUMN_STATUS + " TEXT DEFAULT 'Pending')";
+
+        String CREATE_TABLE_FAVOURITES = "CREATE TABLE " + TABLE_FAVOURITES + "("
+                + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COL_PROPERTY_ID + " INTEGER)";
 
         db.execSQL(CREATE_PROPERTIES_TABLE);
         db.execSQL(CREATE_USERS_TABLE);
-
+        db.execSQL(CREATE_TABLE_APPLICATION);
+        db.execSQL(CREATE_TABLE_FAVOURITES);
     }
     public boolean insertUser(String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -168,7 +172,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_IMAGE, image);
 
         cv.put(COLUMN_TYPE, type.toLowerCase());
+
         db.insert(TABLE_PROPERTIES, null, cv);
+
     }
 
     // FIXED: Properly parameterized query
@@ -211,33 +217,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // NEW: Toggle Favorite
+    public void addToFavourite(int propertyId){
 
+        SQLiteDatabase db = this.getWritableDatabase();
 
-    public ArrayList<PropertyDomain> getFavoriteProperties() {
+        ContentValues values = new ContentValues();
+        values.put(COL_PROPERTY_ID, propertyId);
+
+        db.insert(TABLE_FAVOURITES, null, values);
+    }
+    public ArrayList<PropertyDomain> getFavouriteProperties() {
         ArrayList<PropertyDomain> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PROPERTIES + " WHERE " + COLUMN_IS_FAVORITE + " = 1", null);
+
+        String query = "SELECT * FROM " + TABLE_PROPERTIES +
+                " WHERE " + COLUMN_ID +
+                " IN (SELECT " + COL_PROPERTY_ID + " FROM " + TABLE_FAVOURITES + ")";
+
+        Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
             do {
                 PropertyDomain property = new PropertyDomain(
-                        cursor.getString(1), cursor.getString(2),
-                        cursor.getString(3), cursor.getString(4),
-                         cursor.getInt(6),cursor.getString(7)
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LOCATION)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PRICE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)),
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE))
                 );
-                property.setId(cursor.getInt(0));
-                property.setFavorite(true);
+
+                property.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+                property.setFavorite(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_FAVORITE)) == 1);
+
                 list.add(property);
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         return list;
     }
-
-    public void updateFavoriteStatus(int id, boolean isFavorite) {
+    public void updateFavouriteStatus(int id, boolean isFavourite) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_IS_FAVORITE, isFavorite ? 1 : 0);
+        values.put(COLUMN_IS_FAVORITE, isFavourite ? 1 : 0);
         db.update(TABLE_PROPERTIES, values, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
@@ -273,8 +296,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROPERTIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITES);
+
         onCreate(db);
     }
 

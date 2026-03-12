@@ -8,4 +8,5 @@
     <string name="admin_panel_approvals" />
     <string name="admin_approval_portal" />
     <string name="approve_application" />
+    <string name="add_to_favourites" />
 </resources>

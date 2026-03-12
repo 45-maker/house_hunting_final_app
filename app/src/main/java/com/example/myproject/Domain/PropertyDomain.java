@@ -22,6 +22,7 @@ public class PropertyDomain implements Serializable {
     private int address;
 
     private boolean favorite;
+    private char garage;
 
     // 1. Constructor used by DatabaseHelper.insertSampleProperties
     public PropertyDomain(String title, String location, String price, String description, int image, String type) {
@@ -38,6 +39,7 @@ public class PropertyDomain implements Serializable {
         this.bed = 2;
         this.bath = 1;
         this.size = 80;
+        this.garage=1;
     }
 
     // 2. Empty Constructor (REQUIRED for SQLite loops)
@@ -150,5 +152,13 @@ public class PropertyDomain implements Serializable {
     }
 
     public void setFavorite(boolean favorite) {this.favorite = favorite;
+    }
+
+    public char[] getGarage() {
+        return new char[]{garage};
+    }
+
+    public void setGarage(char garage) {
+        this.garage = garage;
     }
 }
